@@ -15,11 +15,11 @@ class Game {
     }
 
     void add(Frame currentFrame) {
-        addNextFrame(currentFrame);
+        addToPrevious(currentFrame);
         frames.add(currentFrame);
     }
 
-    private void addNextFrame(Frame frame) {
+    private void addToPrevious(Frame frame) {
         if (!frames.isEmpty()) {
             frames.getLast().setNextFrame(frame);
         }
