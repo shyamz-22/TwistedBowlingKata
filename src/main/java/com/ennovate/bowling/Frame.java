@@ -28,24 +28,16 @@ class Frame {
         return rolls.stream().mapToInt(Integer::intValue).sum();
     }
 
-    private boolean consecutiveStrikes() {
-        return isStrike() && nextFrame.isStrike() && !isNinthFrame();
-    }
-
-    private boolean isNinthFrame() {
-        return nextFrame.getNextFrame() == null;
-    }
-
-    private boolean isTenthFrame() {
-        return nextFrame == null;
-    }
-
-    private boolean isStrike() {
-        return (rolls.get(0) == 10) && !isTenthFrame();
+    private boolean isSpare() {
+        return !isStrike() && (score == 10);
     }
 
     private Integer spareBonus() {
         return firstRoll(nextFrame);
+    }
+
+    private boolean isStrike() {
+        return (rolls.get(0) == 10) && !isTenthFrame();
     }
 
     private int strikeBonus() {
@@ -56,17 +48,30 @@ class Frame {
         else if (isNinthFrame())
         {
             return nextFrame.getRolls().stream()
-                                       .limit(2)
-                                       .mapToInt(Integer::intValue)
-                                       .sum();
+                    .limit(2)
+                    .mapToInt(Integer::intValue)
+                    .sum();
         } else {
             return nextFrame.scoreWithoutBonus();
         }
     }
 
-    private boolean isSpare() {
-        return !isStrike() && (score == 10);
+    private boolean consecutiveStrikes() {
+        return isStrike() && nextFrame.isStrike() && !isNinthFrame();
     }
+
+    private int firstRoll(Frame frame) {
+        return frame.getRolls().get(0);
+    }
+
+    private boolean isNinthFrame() {
+        return nextFrame.getNextFrame() == null;
+    }
+
+    private boolean isTenthFrame() {
+        return nextFrame == null;
+    }
+
 
     void setNextFrame(Frame nextFrame) {
         this.nextFrame = nextFrame;
@@ -78,9 +83,5 @@ class Frame {
 
     private ArrayList<Integer> getRolls() {
         return rolls;
-    }
-
-    private int firstRoll(Frame frame) {
-        return frame.getRolls().get(0);
     }
 }
