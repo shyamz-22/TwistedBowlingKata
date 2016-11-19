@@ -40,6 +40,14 @@ public class GameTest {
     }
 
     @Test
+    public void testAllSpares() throws Exception {
+        rollMany(9, 5);
+        game.add(new Frame().roll(5).roll(5).roll(5));
+        assertThat(game.score()).isEqualTo(150);
+
+    }
+
+    @Test
     public void testOneStrike() throws Exception {
         game.add(strike());
         game.add(new Frame().roll(3).roll(4));
@@ -63,7 +71,7 @@ public class GameTest {
     }
 
     @Test
-    public void testPerfectGame() throws Exception {
+    public void testAllStrikes() throws Exception {
         rollMany(9, 10);
         game.add(new Frame().roll(10).roll(10).roll(10));
         assertThat(game.score()).isEqualTo(300);
