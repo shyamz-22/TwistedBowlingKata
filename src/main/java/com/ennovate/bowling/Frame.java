@@ -14,7 +14,7 @@ class Frame {
     }
 
     int score() {
-        score = scoreWithoutBonus();
+        score = totalPinsKnocked();
         if (isStrike()) {
             score += strikeBonus();
         } else if (isSpare()) {
@@ -24,7 +24,7 @@ class Frame {
         return score;
     }
 
-    private int scoreWithoutBonus() {
+    private int totalPinsKnocked() {
         return rolls.stream().mapToInt(Integer::intValue).sum();
     }
 
@@ -32,7 +32,7 @@ class Frame {
         return !isStrike() && (score == 10);
     }
 
-    private Integer spareBonus() {
+    private int spareBonus() {
         return firstRoll(nextFrame);
     }
 
@@ -52,7 +52,7 @@ class Frame {
                     .mapToInt(Integer::intValue)
                     .sum();
         } else {
-            return nextFrame.scoreWithoutBonus();
+            return nextFrame.totalPinsKnocked();
         }
     }
 
