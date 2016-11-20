@@ -16,6 +16,7 @@ class Game {
 
     void add(Frame currentFrame) {
         addToPrevious(currentFrame);
+        currentFrame.setFrameIndex(frames.size()+1);
         frames.add(currentFrame);
     }
 
